@@ -14,13 +14,19 @@
     mc:Ignorable="d">
     <Grid RowDefinitions="*,*">
         <TreeView Items="{Binding Items}">
+            <TreeView.ItemTemplate>
+                <TreeDataTemplate DataType="vm:NodeViewModel" ItemsSource="{Binding Children}">
+                    <ContentControl Content="{Binding}" />
+                </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+            
             <TreeView.DataTemplates>
-                <TreeDataTemplate DataType="vm:BranchNodeViewModel" ItemsSource="{Binding Children}">
-                    <TextBlock Text="{Binding Children.Count, StringFormat=[BranchNode - Children: {0}]}" />
-                </TreeDataTemplate>
-                <TreeDataTemplate DataType="vm:LeafNodeViewModel" ItemsSource="{Binding Children}">
-                    <TextBlock Text="[LeafNode]" />
-                </TreeDataTemplate>
+                <DataTemplate DataType="vm:BranchNodeViewModel">
+                    <TextBlock Text="{Binding Children.Count, StringFormat='Branch has {0} Children'}"></TextBlock>
+                </DataTemplate>
+                <DataTemplate DataType="vm:LeafNodeViewModel">
+                    <TextBlock Text="{Binding Children.Count, StringFormat='Leave has {0} Children'}"></TextBlock>
+                </DataTemplate>
             </TreeView.DataTemplates>
         </TreeView>
 
